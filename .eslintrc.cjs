@@ -1,4 +1,4 @@
-// TrungQuanDev: https://youtube.com/@trungquandev
+// HuyHoangDev
 module.exports = {
   env: { es2020: true, node: true },
   extends: [

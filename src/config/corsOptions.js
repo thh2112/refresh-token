@@ -4,4 +4,5 @@ export const corsOptions = {
     return callback(null, true)
   },
   optionsSuccessStatus: 200,
+  credentials: true
 }

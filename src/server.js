@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-// Author: TrungQuanDev: https://youtube.com/@trungquandev
+// Author: HuyHoangDev
 
 import express from 'express'
 import cors from 'cors'
@@ -28,7 +28,7 @@ const START_SERVER = () => {
   app.use('/v1', APIs_V1)
 
   // Should be store to env in the actual product: check here: https://youtu.be/Vgr3MWb7aOw
-  const LOCAL_DEV_APP_PORT = 3000
+  const LOCAL_DEV_APP_PORT = 8017
   const LOCAL_DEV_APP_HOST = 'localhost'
   const AUTHOR = 'HuyHoangDev'
   app.listen(LOCAL_DEV_APP_PORT, LOCAL_DEV_APP_HOST, () => {

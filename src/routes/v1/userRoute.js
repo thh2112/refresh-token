@@ -1,4 +1,4 @@
-// Author: TrungQuanDev: https://youtube.com/@trungquandev
+// Author: HuyHoangDev
 import express from 'express'
 import { userController } from '~/controllers/userController'
 

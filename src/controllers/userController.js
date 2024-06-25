@@ -10,47 +10,47 @@ const MOCK_DATABASE = {
   }
 }
 
-const ACCESS_TOKEN_SECRET_SIGNATURE = 'KBgJwUETt4HeVD05WaXXI9V3JnwCVP'
-const REFRESH_TOKEN_SECRET_SIGNATURE = 'fcCjhnpeopVn2Hg1jG75MUi62051yL'
+export const ACCESS_TOKEN_SECRET_SIGNATURE = 'KBgJwUETt4HeVD05WaXXI9V3JnwCVP'
+export const REFRESH_TOKEN_SECRET_SIGNATURE = 'fcCjhnpeopVn2Hg1jG75MUi62051yL'
 
 const login = async (req, res) => {
   try {
     const { email } = req.body;
 
-    const useInfo = {
+    const userInfo = {
       id: MOCK_DATABASE.USER.ID,
       email
     }
 
     const accessToken = await JwtProvider.generateToken(
-      useInfo,
+      userInfo,
       ACCESS_TOKEN_SECRET_SIGNATURE,
       ms('1h')
     )
 
     const refreshToken = await JwtProvider.generateToken(
-      useInfo,
+      userInfo,
       REFRESH_TOKEN_SECRET_SIGNATURE,
       ms('30 days')
     )
     
     // save to cookie
-    // res.cookie('accessToken', accessToken, {
-    //   httpOnly: true,
-    //   secure: true,
-    //   sameSite: 'none',
-    //   maxAge: ms('30 days')
-    // })
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      maxAge: ms('30 days')
+    })
 
-    // res.cookie('refreshToken', refreshToken, {
-    //   httpOnly: true,
-    //   secure: true,
-    //   sameSite: 'none',
-    //   maxAge: ms('30 days')
-    // })
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+      maxAge: ms('30 days')
+    })
 
     res.status(StatusCodes.OK).json({ 
-      ...useInfo,
+      userInfo,
       refreshToken,
       accessToken
     })
