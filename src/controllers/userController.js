@@ -25,13 +25,13 @@ const login = async (req, res) => {
     const accessToken = await JwtProvider.generateToken(
       userInfo,
       ACCESS_TOKEN_SECRET_SIGNATURE,
-      ms('1h')
+      5
     )
 
     const refreshToken = await JwtProvider.generateToken(
       userInfo,
       REFRESH_TOKEN_SECRET_SIGNATURE,
-      ms('30 days')
+      '14 days'
     )
     
     // save to cookie
@@ -39,14 +39,14 @@ const login = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
-      maxAge: ms('30 days')
+      maxAge: ms('14 days')
     })
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: true,
       sameSite: 'none',
-      maxAge: ms('30 days')
+      maxAge: ms('14 days')
     })
 
     res.status(StatusCodes.OK).json({ 
