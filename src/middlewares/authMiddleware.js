@@ -4,13 +4,15 @@ import { ACCESS_TOKEN_SECRET_SIGNATURE } from '../controllers/userController';
 
 
 const isAuthorized = async (req, res, next) => {
-    // get token from cookie
-    const accessToken = req.cookies.accessToken
-    // // get token from headers
-    // const accessToken = req.headers.authorization
-
     try {
-        const decodeAccessToken = await JwtProvider.verifyToken(accessToken, ACCESS_TOKEN_SECRET_SIGNATURE);
+        const accessToken = req.headers.authorization
+        if (!accessToken) {
+            res.status(StatusCodes.UNAUTHORIZED).json({ message: "Unauthorization" })
+            return
+        }    
+
+        const token = accessToken?.substring('Bearer '.length)
+        const decodeAccessToken = await JwtProvider.verifyToken(token, ACCESS_TOKEN_SECRET_SIGNATURE);
         req.user = decodeAccessToken;
         next();
     } catch (error) {
@@ -20,7 +22,7 @@ const isAuthorized = async (req, res, next) => {
             return
         }
 
-        res.status(StatusCodes.GONE).json({ message: "Unauthorization" })
+        res.status(StatusCodes.UNAUTHORIZED).json({ message: "Unauthorization" })
     }
 }
 
